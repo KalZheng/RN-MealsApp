@@ -11,7 +11,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <>
-      <StatusBar style='dark' />
+      <StatusBar style='light' />
       <NavigationContainer>
         <Stack.Navigator
           //this allow to set default styling for all screen
@@ -24,10 +24,28 @@ export default function App() {
             name="MealsCategories"
             component={CategoriesScreen}
             options={{
-              title: 'All Categorires',
+              title: 'All Categories',
             }}
           />
-          <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
+          <Stack.Screen
+            name="MealsOverview"
+            component={MealsOverviewScreen}
+          // to get the title for the screen dynamically 
+          // option 1 
+          // the {route, navigation} is provided react navigation 
+          // when pass function to the options param
+          // you then can extract the category id from route just as MealsOverviewScreen
+          // options={({ route, navigation }) => {
+          //   const title = route.params.title;
+          //   return {
+          //     title: title,
+          //   };
+          // }}
+          // option 2 is to fetch the title in the screen 
+          // that you are going to 
+          // which in this case is the MealsOverviewScreen
+          // so check there for option 2 
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>
