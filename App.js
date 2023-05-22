@@ -1,51 +1,78 @@
-import { StyleSheet } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
-import CategoriesScreen from './screen/CategoriesScreen';
-import MealsOverviewScreen from './screen/MealsOverviewScreen';
-import MealDetailScreen from './screen/MealDetailScreen';
+import CategoriesScreen from "./screen/CategoriesScreen";
+import MealsOverviewScreen from "./screen/MealsOverviewScreen";
+import MealDetailScreen from "./screen/MealDetailScreen";
+import FavoritesScreen from "./screen/FavoritesScreen";
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function DrawerNavigator() {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#351401" },
+        headerTintColor: "white",
+        sceneContainerStyle: { backgroundColor: "#3f2f25" },
+      }}
+    >
+      <Drawer.Screen
+        name="Categories"
+        component={CategoriesScreen}
+        options={{
+          title: "All Categories",
+        }}
+      />
+      <Drawer.Screen name="Favorites" component={FavoritesScreen} />
+    </Drawer.Navigator>
+  );
+}
 
 export default function App() {
   return (
     <>
-      <StatusBar style='light' />
+      <StatusBar style="light" />
       <NavigationContainer>
         <Stack.Navigator
           //this allow to set default styling for all screen
           screenOptions={{
-            headerStyle: { backgroundColor: '#351401' },
-            headerTintColor: 'white',
-            contentStyle: { backgroundColor: '#3f2f25' }
-          }}>
+            headerStyle: { backgroundColor: "#351401" },
+            headerTintColor: "white",
+            contentStyle: { backgroundColor: "#3f2f25" },
+          }}
+        >
           <Stack.Screen
-            name="MealsCategories"
-            component={CategoriesScreen}
+            // name="MealsCategories"
+            name="DrawerScreen"
+            // component={CategoriesScreen}
+            component={DrawerNavigator}
             options={{
-              title: 'All Categories',
+              headerShown: false,
             }}
           />
           <Stack.Screen
             name="MealsOverview"
             component={MealsOverviewScreen}
-          // to get the title for the screen dynamically 
-          // option 1 
-          // the {route, navigation} is provided react navigation 
-          // when pass function to the options param
-          // you then can extract the category id from route just as MealsOverviewScreen
-          // options={({ route, navigation }) => {
-          //   const title = route.params.title;
-          //   return {
-          //     title: title,
-          //   };
-          // }}
-          // option 2 is to fetch the title in the screen 
-          // that you are going to 
-          // which in this case is the MealsOverviewScreen
-          // so check there for option 2 
+            // to get the title for the screen dynamically
+            // option 1
+            // the {route, navigation} is provided react navigation
+            // when pass function to the options param
+            // you then can extract the category id from route just as MealsOverviewScreen
+            // options={({ route, navigation }) => {
+            //   const title = route.params.title;
+            //   return {
+            //     title: title,
+            //   };
+            // }}
+            // option 2 is to fetch the title in the screen
+            // that you are going to
+            // which in this case is the MealsOverviewScreen
+            // so check there for option 2
           />
           <Stack.Screen
             name="MealDetail"
@@ -56,6 +83,9 @@ export default function App() {
             //     return <Button title="tap me"  />;
             //   }
             // }}
+            options={{
+              title: "About the Meal",
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
@@ -64,7 +94,5 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-
-  },
+  container: {},
 });
