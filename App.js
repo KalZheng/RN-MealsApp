@@ -9,6 +9,7 @@ import MealsOverviewScreen from "./screen/MealsOverviewScreen";
 import MealDetailScreen from "./screen/MealDetailScreen";
 import FavoritesScreen from "./screen/FavoritesScreen";
 import IconButton from "./components/IconButton";
+import FavoritesContextProvider from "./store/context/favorites-context";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -53,58 +54,60 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <NavigationContainer>
-        <Stack.Navigator
-          //this allow to set default styling for all screen
-          screenOptions={{
-            headerStyle: { backgroundColor: "#351401" },
-            headerTintColor: "white",
-            contentStyle: { backgroundColor: "#3f2f25" },
-          }}
-        >
-          <Stack.Screen
-            // name="MealsCategories"
-            name="DrawerScreen"
-            // component={CategoriesScreen}
-            component={DrawerNavigator}
-            options={{
-              headerShown: false,
+      <FavoritesContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            //this allow to set default styling for all screen
+            screenOptions={{
+              headerStyle: { backgroundColor: "#351401" },
+              headerTintColor: "white",
+              contentStyle: { backgroundColor: "#3f2f25" },
             }}
-          />
-          <Stack.Screen
-            name="MealsOverview"
-            component={MealsOverviewScreen}
-            // to get the title for the screen dynamically
-            // option 1
-            // the {route, navigation} is provided react navigation
-            // when pass function to the options param
-            // you then can extract the category id from route just as MealsOverviewScreen
-            // options={({ route, navigation }) => {
-            //   const title = route.params.title;
-            //   return {
-            //     title: title,
-            //   };
-            // }}
-            // option 2 is to fetch the title in the screen
-            // that you are going to
-            // which in this case is the MealsOverviewScreen
-            // so check there for option 2
-          />
-          <Stack.Screen
-            name="MealDetail"
-            component={MealDetailScreen}
-            // add header button one way
-            // options={{
-            //   headerRight: () => {
-            //     return <Button title="tap me"  />;
-            //   }
-            // }}
-            options={{
-              title: "About the Meal",
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+          >
+            <Stack.Screen
+              // name="MealsCategories"
+              name="DrawerScreen"
+              // component={CategoriesScreen}
+              component={DrawerNavigator}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="MealsOverview"
+              component={MealsOverviewScreen}
+              // to get the title for the screen dynamically
+              // option 1
+              // the {route, navigation} is provided react navigation
+              // when pass function to the options param
+              // you then can extract the category id from route just as MealsOverviewScreen
+              // options={({ route, navigation }) => {
+              //   const title = route.params.title;
+              //   return {
+              //     title: title,
+              //   };
+              // }}
+              // option 2 is to fetch the title in the screen
+              // that you are going to
+              // which in this case is the MealsOverviewScreen
+              // so check there for option 2
+            />
+            <Stack.Screen
+              name="MealDetail"
+              component={MealDetailScreen}
+              // add header button one way
+              // options={{
+              //   headerRight: () => {
+              //     return <Button title="tap me"  />;
+              //   }
+              // }}
+              options={{
+                title: "About the Meal",
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </FavoritesContextProvider>
     </>
   );
 }
